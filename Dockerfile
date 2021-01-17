@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		xz-utils \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN echo 'deb http://httpredir.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
+RUN echo 'deb [check-valid-until=no] http://archive.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
@@ -45,7 +45,7 @@ ENV JAVA_DEBIAN_VERSION 8u40~b04-2
 ENV CA_CERTIFICATES_JAVA_VERSION 20140324
 
 RUN set -x \
-	&& apt-get update \
+	&& apt-get -o Acquire::Check-Valid-Until=false update \
 	&& apt-get install -y \
 		openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
 		ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
